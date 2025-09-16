@@ -11,19 +11,29 @@ if (!isset($_SESSION['user'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Library Management System</title>
+    <title>LIBRARY MANAGEMENT SYSTEM</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f5f5f5;
+            background-image:url(https://wallpaperaccess.com/full/6396704.jpg);
+            background-size: cover;
             text-align: center;
             padding: 50px;
         }
         h1 {
-            color: #333;
+            color: #f3efefff;
+            padding:50px;
         }
         .menu {
-            margin-top: 30px;
+            margin-top: 50px;
+        }
+        logout-box {
+            background: rgba(164, 72, 72, 0.9);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+            width: 400px;
+            text-align: center;
         }
         .menu a {
             display: inline-block;
@@ -42,16 +52,23 @@ if (!isset($_SESSION['user'])) {
             margin-top: 30px;
         }
         .logout a {
-            color: red;
+           
+            display: inline-block;
+            padding: 15px 25px;
+            margin: 10px;
+            background: #007bff;
+            color: white;
             text-decoration: none;
-            font-weight: bold;
-        }
+            font-size: 18px;
+            border-radius: 5px;
+}
+        
     </style>
 </head>
 <body>
 
-    <h1>📚 Library Management System</h1>
-    <p>Welcome, <?php echo $_SESSION['user']; ?>! Choose an option below:</p>
+    <h1>📚 LIBRARY MANAGEMENT SYSTEM</h1>
+    
 
     <div class="menu">
         <a href="library.php">All Books</a>
