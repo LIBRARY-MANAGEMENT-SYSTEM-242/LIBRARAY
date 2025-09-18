@@ -1,52 +1,78 @@
 <?php
-// Start session if needed
 session_start();
 
-// Define variable for messages
-$message = '';
+// Simulated user storage (you'll eventually replace this with a database)
+$users = [
+    "admin" => "1234",
+    "user" => "1234"
+];
 
-// If the form was submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
+// Password change logic
+if (isset($_POST['change_password'])) {
+    $username = $_POST['cp_username'];
+    $old_password = $_POST['old_password'];
+    $new_password = $_POST['new_password'];
 
-    // ✅ In real-world apps: Check if email exists in DB
-    // For now, we'll assume it does and simulate email sending
+    if (isset($users[$username]) && $users[$username] === $old_password) {
+        // Password updated (simulated)
+        $users[$username] = $new_password;
+        $success = "Password changed successfully (temporary simulation).";
+    } else {
+        $cp_error = "Invalid username or current password.";
+    }
+}
 
-    // Simulated reset link (for testing/demo purposes)
-    $message = "If an account with email <strong>$email</strong> exists, a password reset link has been sent.";
+// Login logic
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    if (isset($users[$username]) && $users[$username] === $password) {
+        $_SESSION['user'] = $username;
+        if ($username == "admin") {
+            header("Location: home.php");
+        } else {
+            header("Location: userhome.php");
+        }
+        exit();
+    } else {
+        $error = "Invalid Username or Password!";
+    }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Forgot Password</title>
+
+               <title>Login - Library Management System</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f3f3f3;
+            background-image:url(https://blog.1password.com/posts/2022/should-you-change-passwords-every-90-days/header.png);
+            background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
-        .forgot-box {
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
-            width: 400px;
-            text-align: center;
-        }
-        input[type="email"] {
+
+.login-box {
+    background: rgba(108, 82, 223, 0.9);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    text-align: center;
+}
+ input[type="text"], input[type="password"] {
             width: 90%;
             padding: 10px;
-            margin: 10px 0 20px 0;
-            border: 1px solid #ccc;
+            margin: 10px 0;
+            border: 1px solid #f7f1f1ff;
             border-radius: 5px;
         }
         button {
-            background: #0056b3;
+            background: +#2c0aedff;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -54,36 +80,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             cursor: pointer;
             font-size: 16px;
         }
-        button:hover {
-            background: #003d80;
-        }
-        .message {
-            color: green;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-        .back-link {
-            display: block;
-            margin-top: 20px;
-            font-size: 14px;
-            text-decoration: underline;
-            color: #0056b3;
-        }
-    </style>
+        </style>
 </head>
 <body>
-    <div class="forgot-box">
-        <h2>Forgot Password</h2>
-        <form method="POST" action="">
-            <input type="email" name="email" placeholder="Enter your registered email" required><br>
-            <button type="submit">Send Reset Link</button>
-        </form>
+    <div class="container">
 
-        <?php if (!empty($message)) : ?>
-            <p class="message"><?php echo $message; ?></p>
-        <?php endif; ?>
-
-        <a href="login.php" class="back-link">Back to Login</a>
+        <div class="login-box">
+            <h2>CHANGE PASSWORD</h2>
+            <form method="POST">
+                <input type="text" name="cp_username" placeholder="Enter Username" required><br><br>
+            
+                <input type="password" name="old_password" placeholder="Current Password" required><br><br>
+                <input type="password" name="new_password" placeholder="New Password" required><br><br>
+                <button type="submit" name="change_password">Change Password</button>
+            </form>
+            <?php
+            if (!empty($cp_error)) {
+                echo "<p class='error'>$cp_error</p>";
+            }
+            if (!empty($success)) {
+                echo "<p class='success'>$success</p>";
+            }
+            ?>
+        </div>
     </div>
 </body>
 </html>
