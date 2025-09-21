@@ -2,7 +2,7 @@
 // Database connection settings
 $host = "localhost";
 $username = "root"; // Change if not default
-$password = "123";     // Change if there's a password
+$password = "1234";     // Change if there's a password
 $dbname = "library_db";
 
 // Create connection
