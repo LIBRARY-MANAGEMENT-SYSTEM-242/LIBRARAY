@@ -2,7 +2,7 @@
 $host = 'localhost';
 $db   = 'librarymanagementsystem';
 $user = 'root'; // your MySQL username
-$pass = 'user123';     // your MySQL password
+$pass = '1234';     // your MySQL password
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
@@ -11,3 +11,4 @@ try {
     die("Connection failed: " . $e->getMessage());
 }
 ?>
+
