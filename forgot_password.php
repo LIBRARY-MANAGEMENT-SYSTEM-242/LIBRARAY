@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
         }
         button {
             background: +#2c0aedff;
-            color: white;
+            color: green;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
