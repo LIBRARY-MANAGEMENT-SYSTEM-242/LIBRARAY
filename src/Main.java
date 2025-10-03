@@ -1,40 +1,64 @@
-import java.util.Scanner;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        LibraryManager lm = new LibraryManager();
-        Scanner sc = new Scanner(System.in);
-        int choice;
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Library Management System");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(400, 600);
 
-        do {
-            System.out.println("\n--- Library Management System ---");
-            System.out.println("1. Add Book");
-            System.out.println("2. View Books");
-            System.out.println("3. Search Book");
-            System.out.println("4. Delete Book");
-            System.out.println("5. Issue Book");
-            System.out.println("6. Return Book");
-            System.out.println("7. View Issued Books Only");
-            System.out.println("8. View Overdue Books");
-            System.out.println("0. Exit");
-            System.out.print("Choose: ");
-            choice = sc.nextInt();
-            sc.nextLine();
+            LibraryManager lm = new LibraryManager();
 
-            switch (choice) {
-                case 1: lm.addBook(); break;
-                case 2: lm.viewBooks(); break;
-                case 3: lm.searchBook(); break;
-                case 4: lm.deleteBook(); break;
-                case 5: lm.issueBook(); break;
-                case 6: lm.returnBook(); break;
-                case 7: lm.viewIssuedBooks(); break;
-                case 8: lm.viewOverdueBooks(); break;
-                case 0: System.out.println("Goodbye!"); break;
-                default: System.out.println("Invalid choice.");
-            }
-        } while (choice != 0);
+            // ✅ Create a panel with GridLayout and padding
+            JPanel panel = new JPanel(new GridLayout(0, 1, 10, 10));
+            panel.setBorder(new EmptyBorder(20, 40, 20, 40)); 
+            // top, left, bottom, right spacing (you can adjust numbers)
 
-        sc.close();
+            // ✅ Buttons
+            JButton studentBtn = new JButton("Student Registration");
+            JButton addBtn = new JButton("Add Book");
+            JButton viewBtn = new JButton("View Books");
+            JButton searchBtn = new JButton("Search Book");
+            JButton deleteBtn = new JButton("Delete Book");
+            JButton issueBtn = new JButton("Issue Book");
+            JButton returnBtn = new JButton("Return Book");
+            JButton issuedBtn = new JButton("View Issued Books");
+            JButton overdueBtn = new JButton("View Overdue Books");
+            JButton logoutBtn = new JButton("Logout");
+
+            // ✅ Button Actions
+            studentBtn.addActionListener(e -> lm.addStudentGUI());
+            addBtn.addActionListener(e -> lm.addBookGUI());
+            viewBtn.addActionListener(e -> lm.viewBooksGUI());
+            searchBtn.addActionListener(e -> lm.searchBookGUI());
+            deleteBtn.addActionListener(e -> lm.deleteBookGUI());
+            issueBtn.addActionListener(e -> lm.issueBookGUI());
+            returnBtn.addActionListener(e -> lm.returnBookGUI());
+            issuedBtn.addActionListener(e -> lm.viewIssuedBooksGUI());
+            overdueBtn.addActionListener(e -> lm.viewOverdueBooksGUI());
+
+            logoutBtn.addActionListener(e -> {
+                frame.dispose();
+                Login.main(null);
+            });
+
+            // ✅ Add buttons to panel (not directly to frame)
+            panel.add(studentBtn);
+            panel.add(addBtn);
+            panel.add(viewBtn);
+            panel.add(searchBtn);
+            panel.add(deleteBtn);
+            panel.add(issueBtn);
+            panel.add(returnBtn);
+            panel.add(issuedBtn);
+            panel.add(overdueBtn);
+            panel.add(logoutBtn);
+
+            // ✅ Add panel to frame
+            frame.add(panel);
+            frame.setVisible(true);
+        });
     }
 }
