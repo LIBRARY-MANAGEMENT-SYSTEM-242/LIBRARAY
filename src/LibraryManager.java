@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
@@ -216,11 +217,25 @@ public void addStudentGUI() {
 }
 
 
-    // ✅ Delete Book (GUI)
-    public void deleteBookGUI() {
+    // ✅ Delete Book (GUI with Window)
+public void deleteBookGUI() {
+    JFrame frame = new JFrame("Delete Book");
+    frame.setSize(300, 200);
+    frame.setLayout(new GridLayout(2, 2, 10, 10));
+    frame.setLocationRelativeTo(null); // Center window
+
+    JLabel idLabel = new JLabel("Book ID:");
+    JTextField idField = new JTextField();
+    JButton deleteBtn = new JButton("Delete");
+
+    frame.add(idLabel);
+    frame.add(idField);
+    frame.add(new JLabel()); // Empty space
+    frame.add(deleteBtn);
+
+    deleteBtn.addActionListener(e -> {
         try {
-            String idStr = JOptionPane.showInputDialog("Enter Book ID to delete:");
-            int id = Integer.parseInt(idStr);
+            int id = Integer.parseInt(idField.getText());
 
             String sql = "DELETE FROM books WHERE id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -228,20 +243,39 @@ public void addStudentGUI() {
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
-                JOptionPane.showMessageDialog(null, "Book Deleted Successfully!");
+                JOptionPane.showMessageDialog(frame, "Book Deleted Successfully!");
+                frame.dispose(); // close after success
             } else {
-                JOptionPane.showMessageDialog(null, "No book found with that ID.");
+                JOptionPane.showMessageDialog(frame, "No book found with that ID.");
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, "Error: " + ex.getMessage());
         }
-    }
+    });
 
-    // ✅ Issue Book (GUI)
-    public void issueBookGUI() {
+    frame.setVisible(true);
+}
+
+
+    // ✅ Issue Book (GUI with Window)
+public void issueBookGUI() {
+    JFrame frame = new JFrame("Issue Book");
+    frame.setSize(300, 200);
+    frame.setLayout(new GridLayout(2, 2, 10, 10));
+    frame.setLocationRelativeTo(null); // Center window
+
+    JLabel idLabel = new JLabel("Book ID:");
+    JTextField idField = new JTextField();
+    JButton issueBtn = new JButton("Issue");
+
+    frame.add(idLabel);
+    frame.add(idField);
+    frame.add(new JLabel()); // Empty space
+    frame.add(issueBtn);
+
+    issueBtn.addActionListener(e -> {
         try {
-            String idStr = JOptionPane.showInputDialog("Enter Book ID to issue:");
-            int id = Integer.parseInt(idStr);
+            int id = Integer.parseInt(idField.getText());
 
             String checkSql = "SELECT available FROM books WHERE id = ?";
             PreparedStatement checkStmt = conn.prepareStatement(checkSql);
@@ -254,23 +288,42 @@ public void addStudentGUI() {
                     PreparedStatement stmt = conn.prepareStatement(sql);
                     stmt.setInt(1, id);
                     stmt.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Book Issued Successfully!");
+                    JOptionPane.showMessageDialog(frame, "Book Issued Successfully!");
+                    frame.dispose(); // Close window
                 } else {
-                    JOptionPane.showMessageDialog(null, "Book is already issued.");
+                    JOptionPane.showMessageDialog(frame, "Book is already issued.");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "No book found with that ID.");
+                JOptionPane.showMessageDialog(frame, "No book found with that ID.");
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, "Error: " + ex.getMessage());
         }
-    }
+    });
 
-    // ✅ Return Book (GUI)
-    public void returnBookGUI() {
+    frame.setVisible(true);
+}
+
+
+    // ✅ Return Book (GUI with Window)
+public void returnBookGUI() {
+    JFrame frame = new JFrame("Return Book");
+    frame.setSize(300, 200);
+    frame.setLayout(new GridLayout(2, 2, 10, 10));
+    frame.setLocationRelativeTo(null); // Center window
+
+    JLabel idLabel = new JLabel("Book ID:");
+    JTextField idField = new JTextField();
+    JButton returnBtn = new JButton("Return");
+
+    frame.add(idLabel);
+    frame.add(idField);
+    frame.add(new JLabel()); // Empty space
+    frame.add(returnBtn);
+
+    returnBtn.addActionListener(e -> {
         try {
-            String idStr = JOptionPane.showInputDialog("Enter Book ID to return:");
-            int id = Integer.parseInt(idStr);
+            int id = Integer.parseInt(idField.getText());
 
             String checkSql = "SELECT available FROM books WHERE id = ?";
             PreparedStatement checkStmt = conn.prepareStatement(checkSql);
@@ -283,17 +336,22 @@ public void addStudentGUI() {
                     PreparedStatement stmt = conn.prepareStatement(sql);
                     stmt.setInt(1, id);
                     stmt.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Book Returned Successfully!");
+                    JOptionPane.showMessageDialog(frame, "Book Returned Successfully!");
+                    frame.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Book is already available.");
+                    JOptionPane.showMessageDialog(frame, "Book is already available.");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "No book found with that ID.");
+                JOptionPane.showMessageDialog(frame, "No book found with that ID.");
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, "Error: " + ex.getMessage());
         }
-    }
+    });
+
+    frame.setVisible(true);
+}
+
 
     // ✅ View Issued Books (GUI)
     public void viewIssuedBooksGUI() {
