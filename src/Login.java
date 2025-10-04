@@ -4,20 +4,30 @@ import java.awt.event.*;
 
 public class Login {
     public static void main(String[] args) {
-        // Create Frame
+        // Frame
         JFrame frame = new JFrame("Login - Library Management System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 250);
-        frame.setLocationRelativeTo(null); // Center window
+        frame.setSize(700, 450);
+        frame.setLocationRelativeTo(null);
 
-        // Panel with padding
-        JPanel panel = new JPanel(new BorderLayout(10, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        // ✅ Background Image
+        ImageIcon bgImage = new ImageIcon("library_bg.jpg"); // <-- put your background image here
+        JLabel bgLabel = new JLabel(bgImage);
+        bgLabel.setLayout(new GridBagLayout()); // To place login panel in center
+        frame.setContentPane(bgLabel);
 
-        // Form panel (labels + fields)
-        JPanel formPanel = new JPanel(new GridBagLayout());
+        // ✅ Login Panel with rounded border
+        JPanel loginPanel = new JPanel(new GridBagLayout());
+        loginPanel.setPreferredSize(new Dimension(350, 200));
+        loginPanel.setBackground(new Color(255, 255, 255, 200)); // White with transparency
+
+        loginPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(70, 130, 180), 2, true), // blue border
+                BorderFactory.createEmptyBorder(20, 20, 20, 20)
+        ));
+
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(8, 8, 8, 8);
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JLabel userLabel = new JLabel("Username:");
@@ -31,42 +41,39 @@ public class Login {
         loginBtn.setForeground(Color.WHITE);
         loginBtn.setFocusPainted(false);
 
-        // Add components with layout
+        // Add components
         gbc.gridx = 0; gbc.gridy = 0;
-        formPanel.add(userLabel, gbc);
-
+        loginPanel.add(userLabel, gbc);
         gbc.gridx = 1;
-        formPanel.add(userText, gbc);
+        loginPanel.add(userText, gbc);
 
         gbc.gridx = 0; gbc.gridy = 1;
-        formPanel.add(passLabel, gbc);
-
+        loginPanel.add(passLabel, gbc);
         gbc.gridx = 1;
-        formPanel.add(passText, gbc);
+        loginPanel.add(passText, gbc);
 
         gbc.gridx = 1; gbc.gridy = 2;
-        formPanel.add(loginBtn, gbc);
+        loginPanel.add(loginBtn, gbc);
 
-        // Add formPanel to main panel
-        panel.add(formPanel, BorderLayout.CENTER);
+        // ✅ Add login panel to background
+        bgLabel.add(loginPanel, new GridBagConstraints());
 
-        // Add panel to frame
-        frame.add(panel);
         frame.setVisible(true);
 
-        // Login Button Action
+        // ✅ Login button action
         loginBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String username = userText.getText();
                 String password = new String(passText.getPassword());
 
-                if(username.equals("admin") && password.equals("1234")) {
+                if (username.equals("admin") && password.equals("1234")) {
                     JOptionPane.showMessageDialog(frame, "Login Successful!");
-                    frame.dispose(); // close login window
-                    Main.main(null); // open your Main.java menu
+                    frame.dispose();
+                    Main.main(null);
                 } else {
-                    JOptionPane.showMessageDialog(frame, "Invalid Username or Password", 
-                                                  "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame,
+                            "Invalid Username or Password",
+                            "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
