@@ -1,3 +1,6 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
@@ -15,20 +18,22 @@ public class Main {
             JFrame frame = new JFrame("Library Management System");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(400, 600);
+            frame.setLocationRelativeTo(null); // Center the frame
 
             LibraryManager lm = new LibraryManager();
-             // ✅ Background Image
-        ImageIcon bgImage = new ImageIcon("backgroundlogin.jpg"); // <-- put your background image here
-        JLabel bgLabel = new JLabel(bgImage);
-        bgLabel.setLayout(new GridBagLayout()); // To place login panel in center
-        frame.setContentPane(bgLabel);
 
-            // ✅ Create a panel with GridLayout and padding
-            JPanel panel = new JPanel(new GridLayout(0, 1, 10, 10));
-            panel.setBorder(new EmptyBorder(20, 40, 20, 40)); 
-            // top, left, bottom, right spacing (you can adjust numbers)
+            // ✅ Background Image
+            ImageIcon bgImage = new ImageIcon("backgroundlogin.jpg"); // Ensure path is correct
+            JLabel bgLabel = new JLabel(bgImage);
+            bgLabel.setLayout(new GridBagLayout()); // To center content
+            frame.setContentPane(bgLabel);
 
-            // ✅ Buttons
+            // ✅ Button Panel (with GridLayout and padding)
+            JPanel panel = new JPanel(new GridLayout(0, 1, 10, 10)); // 1 column, vertical buttons
+            panel.setBorder(new EmptyBorder(30, 30, 30, 30)); // Padding
+            panel.setBackground(new Color(255, 255, 255, 200)); // Semi-transparent white
+
+            // ✅ Create buttons
             JButton studentBtn = new JButton("Student Registration");
             JButton addBtn = new JButton("Add Book");
             JButton viewBtn = new JButton("View Books");
@@ -40,7 +45,19 @@ public class Main {
             JButton overdueBtn = new JButton("View Overdue Books");
             JButton logoutBtn = new JButton("Logout");
 
-            // ✅ Button Actions
+            // ✅ Style buttons consistently
+            JButton[] buttons = { studentBtn, addBtn, viewBtn, searchBtn, deleteBtn,
+                                  issueBtn, returnBtn, issuedBtn, overdueBtn, logoutBtn };
+
+            for (JButton button : buttons) {
+                button.setFocusPainted(false);
+                button.setBackground(new Color(70, 130, 180)); // Steel Blue
+                button.setForeground(Color.WHITE);
+                button.setPreferredSize(new Dimension(200, 35));
+                panel.add(button); // Add to panel
+            }
+
+            // ✅ Add actions
             studentBtn.addActionListener(e -> lm.addStudentGUI());
             addBtn.addActionListener(e -> lm.addBookGUI());
             viewBtn.addActionListener(e -> lm.viewBooksGUI());
@@ -50,29 +67,16 @@ public class Main {
             returnBtn.addActionListener(e -> lm.returnBookGUI());
             issuedBtn.addActionListener(e -> lm.viewIssuedBooksGUI());
             overdueBtn.addActionListener(e -> lm.viewOverdueBooksGUI());
-
             logoutBtn.addActionListener(e -> {
                 frame.dispose();
                 Login.main(null);
             });
 
-            // ✅ Add buttons to panel (not directly to frame)
-            panel.add(studentBtn);
-            panel.add(addBtn);
-            panel.add(viewBtn);
-            panel.add(searchBtn);
-            panel.add(deleteBtn);
-            panel.add(issueBtn);
-            panel.add(returnBtn);
-            panel.add(issuedBtn);
-            panel.add(overdueBtn);
-            panel.add(logoutBtn);
+            // ✅ Add button panel to background (centered)
+            bgLabel.add(panel, new GridBagConstraints());
 
-            // ✅ Add panel to frame
-            frame.add(panel);
+            // ✅ Show the frame
             frame.setVisible(true);
         });
     }
-}
-
 }
