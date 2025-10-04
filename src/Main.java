@@ -1,6 +1,13 @@
-import javax.swing.*;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,6 +17,11 @@ public class Main {
             frame.setSize(400, 600);
 
             LibraryManager lm = new LibraryManager();
+             // ✅ Background Image
+        ImageIcon bgImage = new ImageIcon("backgroundlogin.jpg"); // <-- put your background image here
+        JLabel bgLabel = new JLabel(bgImage);
+        bgLabel.setLayout(new GridBagLayout()); // To place login panel in center
+        frame.setContentPane(bgLabel);
 
             // ✅ Create a panel with GridLayout and padding
             JPanel panel = new JPanel(new GridLayout(0, 1, 10, 10));
@@ -61,4 +73,6 @@ public class Main {
             frame.setVisible(true);
         });
     }
+}
+
 }
